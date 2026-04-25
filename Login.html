@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>A Secret for Chii 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose: #e8a0a0;
+    --rose-deep: #c4606a;
+    --rose-pale: #f9ece8;
+    --cream: #fdf6f0;
+    --ink: #2a1a1a;
+    --ink-soft: #5a3a3a;
+    --gold: #c9a96e;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Petals Animation (Same as your file) */
+  .petal-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 1;
+  }
+  .petal {
+    position: absolute;
+    top: -60px;
+    width: 14px; height: 18px;
+    background: radial-gradient(ellipse at 40% 30%, #f7c5c5, #e8909a);
+    border-radius: 100% 0 100% 0;
+    opacity: 0.7;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* Login Card */
+  .login-card {
+    position: relative;
+    z-index: 10;
+    background: #fff;
+    padding: 3rem 2.5rem;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    border: 1px solid rgba(201,169,110,0.2);
+    box-shadow: 0 10px 40px rgba(196,96,106,0.1);
+    animation: fadeIn 1.5s ease;
+  }
+
+  .login-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--rose-deep), var(--gold), var(--rose-deep));
+  }
+
+  .flower-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.8rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+    color: var(--ink-soft);
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+  }
+
+  input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-bottom: 1px solid var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s;
+    background: transparent;
+    margin-bottom: 1.5rem;
+  }
+
+  input[type="password"]:focus {
+    border-bottom: 1px solid var(--rose-deep);
+  }
+
+  button {
+    background: transparent;
+    border: 1px solid var(--rose-deep);
+    color: var(--rose-deep);
+    padding: 10px 30px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  button:hover {
+    background: var(--rose-deep);
+    color: #fff;
+  }
+
+  .error-msg {
+    color: var(--rose-deep);
+    font-size: 0.85rem;
+    margin-top: 1rem;
+    display: none;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="petal-container" id="petals"></div>
+
+<div class="login-card">
+  <span class="flower-icon">🌸</span>
+  <h1>For Your Eyes Only</h1>
+  <p>Please enter your nickname to proceed</p>
+  
+  <input type="password" id="passInput" placeholder="Sino 'to?..." />
+  <br>
+  <button onclick="checkAccess()">Open Letter</button>
+  <p id="error" class="error-msg">Incorrect, please try again pu!</p>
+</div>
+
+<script>
+  // Petals generation
+  const petalContainer = document.getElementById('petals');
+  function createPetal() {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (6 + Math.random() * 8) + 's';
+    p.style.opacity = 0.4 + Math.random() * 0.5;
+    petalContainer.appendChild(p);
+    setTimeout(() => p.remove(), 14000);
+  }
+  setInterval(createPetal, 600);
+
+  // Simple Password Logic
+  function checkAccess() {
+    const input = document.getElementById('passInput').value;
+    const error = document.getElementById('error');
+    
+    // You can change "Chii" to any password you prefer
+    if(input === "Chii" || input === "chii" || input === "Alex") {
+      // Replace 'chiii.html' with the actual filename of your letter
+      window.location.href = "chiii.html"; 
+    } else {
+      error.style.display = "block";
+      // Shake effect
+      document.querySelector('.login-card').style.animation = "none";
+      setTimeout(() => {
+        document.querySelector('.login-card').style.animation = "fadeIn 0.3s ease";
+      }, 10);
+    }
+  }
+
+  // Allow "Enter" key to submit
+  document.getElementById('passInput').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      checkAccess();
+    }
+  });
+</script>
+
+</body>
+</html>
